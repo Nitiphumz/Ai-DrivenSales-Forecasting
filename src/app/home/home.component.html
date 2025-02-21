@@ -1,0 +1,201 @@
+<div class="container" [ngClass]="{ 'dark-mode': isDarkMode }">
+  <nav class="navbar">
+    <div class="logo">AI-Driven Sales Forecasting</div>
+    <div class="nav-links">
+      <a href="#" class="nav-link">Dashboard</a>
+      <span class="nav-link" (click)="openPaymentDialog()">Payment</span>
+      <div class="points">
+        <span class="point-icon">Point:</span>
+        <span class="point-text">{{ userPoints }}</span>
+      </div>
+      <a href="#" class="nav-link">Logout</a>
+      <button class="theme-toggle" (click)="toggleDarkMode()">
+        <span class="material-symbols-outlined">
+          {{ isDarkMode ? 'light_mode' : 'dark_mode' }}
+        </span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <h1>Sales Analytics Dashboard</h1>
+
+    <div class="upload-section">
+      <label for="file-upload" class="upload-label">
+        <span class="material-symbols-outlined">upload_file</span>
+        Upload Sales Data (100 Points)
+      </label>
+      <input 
+        type="file" 
+        id="file-upload" 
+        (change)="onFileSelected($event)" 
+        accept=".csv,.xlsx,.xls"
+        [disabled]="isLoading"
+      >
+      <div class="file-requirements">
+        <p class="requirements-title">Required File Format: </p><p class="requirements-title">(**ตอนนี้อยู่ในการพัฒนา Ai อาจจะตอบได้บ้างไม่ได้บ้างครับ การอัปโหลดไฟล์ csv ไม่ควรมีข้อมูลขนาดใหญ่เกินเพราะอาจทำให้ Ai error ไม่สามารถให้คำตอบเราได้**)</p>
+        <ul class="requirements-list">
+          <li><strong>Date:</strong> Transaction date (D-M-YYYY)</li>
+          <li><strong>Product:</strong> Product name</li>
+          <li><strong>Quantity:</strong> Number of units sold</li>
+          <li><strong>Price:</strong> Price per unit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="loading-popup">
+        <span class="material-symbols-outlined loading-spinner">sync</span>
+        <span class="loading-text">Processing your data...</span>
+      </div>
+    </div>
+
+    <div class="controls-section">
+      <div class="file-selection">
+        <label for="file-select">Select Data File:</label>
+        <select *ngIf="userFiles.length > 0" [(ngModel)]="selectedFile" (ngModelChange)="onFileSelect($event)" class="form-control">
+          <option value="">Choose a file</option>
+          <option *ngFor="let file of userFiles" [value]="file.file_id">
+            {{ file.filename }}
+          </option>
+        </select>
+      </div>
+
+      <div class="product-selection" *ngIf="availableProducts.length > 0">
+        <label for="product-select">Select Product:</label>
+        <select [(ngModel)]="selectedProduct" (change)="fetchDashboardSummary()" class="form-control">
+          <option value="">All Products</option>
+          <option *ngFor="let product of availableProducts" [value]="product.Product">
+            {{ product.Product }}
+          </option>
+        </select>
+      </div>
+
+      <!-- <div class="month-selection" *ngIf="selectedReportType === 'daily' || selectedReportType1 === 'daily'">
+        <label for="month-select">Select Month:</label>
+        <select [(ngModel)]="selectedMonth" (change)="onMonthSelect(selectedMonth)" class="form-control">
+          <option value="" disabled selected>Select a month</option>
+          <option *ngFor="let month of availableMonths" [value]="month">
+            {{ month }}
+          </option>
+        </select>
+      </div> -->
+
+      <div class="month-selection" *ngIf="selectedReportType === 'daily' || selectedReportType1 === 'daily'">
+  <label for="date-range">Select Date Range:</label>
+  <div class="date-picker-wrapper">
+    <input
+      type="text"
+      #dateRangePicker
+      class="date-range-input"
+      placeholder="Select date range"
+      readonly>
+  </div>
+</div>
+
+      <div class="report-type-filters">
+        <button 
+          [class.active]="selectedReportType === 'daily'"
+          (click)="setReportType('daily')"
+          class="filter-btn">
+          Daily
+        </button>
+        <button 
+          [class.active]="selectedReportType === 'monthly'"
+          (click)="setReportType('monthly')"
+          class="filter-btn">
+          Monthly
+        </button>
+        <button 
+          [class.active]="selectedReportType === 'yearly'"
+          (click)="setReportType('yearly')"
+          class="filter-btn">
+          Yearly
+        </button>
+        <button 
+          [class.active]="selectedReportType === 'compare_trends'"
+          (click)="setReportType('compare_trends')"
+          class="filter-btn">
+          Compare
+        </button>
+        <button 
+          [class.active]="selectedReportType === 'forecast'"
+          (click)="setReportType('forecast')"
+          class="filter-btn">
+          Forecast
+        </button>
+      </div>
+
+      <div class="report-type-filters" *ngIf="isCompare">
+        <button 
+          [class.active]="selectedReportType1 === 'daily'"
+          (click)="setReportType1('daily')"
+          class="filter-btn1">
+          Daily
+        </button>
+        <button 
+          [class.active]="selectedReportType1 === 'monthly'"
+          (click)="setReportType1('monthly')"
+          class="filter-btn1">
+          Monthly
+        </button>
+        <button 
+          [class.active]="selectedReportType1 === 'yearly'"
+          (click)="setReportType1('yearly')"
+          class="filter-btn1">
+          Yearly
+        </button>
+      </div>
+      
+      <div class="forecast-controls" *ngIf="selectedReportType === 'forecast'">
+        <label for="forecast-periods">Forecast Range:</label>
+        <select 
+          id="forecast-periods"
+          [(ngModel)]="selectedForecastPeriods"
+          (change)="fetchDashboardSummary()"
+          class="form-control">
+          <option *ngFor="let period of forecastPeriods" [value]="period">
+            {{ period }} Periods
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="ai_summary" class="ai-summary">
+      <div class="ai-summary-content">{{ ai_summary }}</div>
+      
+      <!-- Input สำหรับคำถามเพิ่มเติม -->
+      <input type="text" [(ngModel)]="new_query"  placeholder="Enter your question..." class="query-input" />
+    
+      <!-- ปุ่มสำหรับส่ง Updated Context ไปที่ API -->
+      <button (click)="sendUpdatedContext()" class="filter-btn">
+        Continue AI Analysis
+      </button>
+    </div>
+    
+    <div *ngIf="summary" class="chart-container">
+      <canvas #salesChart></canvas>
+    </div>
+
+    <button 
+      (click)="Gensummary()"
+      class="filter-btn">
+      AI summary
+    </button>
+
+    <div *ngIf="summary.top_products" class="top-products">
+      <h2>Top Performing Products</h2>
+      <div class="products-grid">
+        <div *ngFor="let product of summary.top_products" class="product-card">
+          <h3>{{ product.Product }}</h3>
+          <p>Total Sales: ฿{{ product["Total Sales"].toLocaleString() }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <app-payment-dialog 
+    *ngIf="showPaymentDialog"
+    (close)="closePaymentDialog()"
+  ></app-payment-dialog>
+</div>

@@ -1,0 +1,30 @@
+/* Import auth styles */
+@import './app/shared/auth.css';
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: white;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Ensure the root app container has the gradient background */
+app-root {
+  display: block;
+  min-height: 100vh;
+  /* background: linear-gradient(to top, #00a2ff, #000000 70%) fixed; */
+}

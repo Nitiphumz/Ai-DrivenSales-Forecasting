@@ -1,0 +1,166 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.auth-container.dark-mode {
+  background: #121212;
+}
+
+.auth-box {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .auth-box {
+  background: #1e1e1e;
+  box-shadow: none; /* ลบเงาออก */
+  border: none; /* ลบขอบ */
+}
+
+.theme-toggle-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.dark-mode h2 {
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.bpassword {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bpassword input {
+  width: 100%;
+  padding: 12px;
+  padding-right: 40px; /* เผื่อพื้นที่ให้ปุ่ม */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none; /* ลบพื้นหลังสีฟ้า */
+  border: none; /* ลบขอบปุ่ม */
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; /* ขนาดปุ่ม */
+  height: 30px;
+}
+
+.dark-mode .theme-toggle .material-symbols-outlined {
+  color: #FFFFFF; /* สีของไอคอนใน Light Mode */
+}
+
+.theme-toggle .material-symbols-outlined {
+  color: #6c5ce7; /* สีของไอคอนใน Dark Mode */
+}
+
+.toggle-password:focus {
+  outline: none;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.dark-mode input {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.2);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: #6c5ce7;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button[type="submit"]:hover {
+  background: #5a4bd1;
+  transform: translateY(-2px);
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.dark-mode .switch-text {
+  color: #aaa;
+}
+
+.switch-text a {
+  color: #6c5ce7;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.switch-text a:hover {
+  color: #5a4bd1;
+}

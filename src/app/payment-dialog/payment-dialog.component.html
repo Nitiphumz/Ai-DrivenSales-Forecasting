@@ -1,0 +1,31 @@
+<div class="payment-dialog-overlay" (click)="close.emit()">
+  <div class="payment-dialog" [ngClass]="{ 'dark-mode': isDarkMode }" (click)="$event.stopPropagation()">
+    <h2>Buy Points</h2>
+    <div class="point-info">
+      <p>Choose an amount to purchase points:</p>
+      <ul>
+        <li>100 THB = 100 Points</li>
+        <li>500 THB = 500 Points</li>
+        <li>1000 THB = 1000 Points</li>
+      </ul>
+    </div>
+    <div class="amount-options">
+      <button 
+        *ngFor="let value of [100, 500, 1000]" 
+        [class.selected]="amount === value"
+        (click)="selectAmount(value)"
+        class="amount-option">
+        <span class="amount">{{ value }} THB</span>
+      </button>
+    </div>
+    <div class="buttons">
+      <button class="cancel" (click)="close.emit()">Cancel</button>
+      <button class="confirm" (click)="processPayment()" [disabled]="!amount || isProcessing">
+        {{ isProcessing ? 'Processing...' : 'Confirm Payment' }}
+      </button>
+    </div>
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </div>
+</div>

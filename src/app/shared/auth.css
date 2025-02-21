@@ -1,0 +1,97 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, #0078ff, #060606 30%) fixed;
+}
+
+.auth-box {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2.5rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  border: 1px solid;
+  animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 198, 255, 0.1);
+}
+
+input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00c6ff;
+  box-shadow: 0 0 10px rgba(0, 198, 255, 0.2);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #0072ff, #00c6ff);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #ffffff80;
+}
+
+.switch-text a {
+  color: #00c6ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.switch-text a:hover {
+  color: #0072ff;
+}
+
+@keyframes borderGlow {
+  from {
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.2);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 198, 255, 0.4);
+  }
+}
